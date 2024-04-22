@@ -1,0 +1,154 @@
+def video_to_audio():
+        import moviepy.editor as mp
+        from tkinter.filedialog import askopenfilename
+
+        # Ask the user to select a video file
+        vid = askopenfilename(title="Select a Video File", filetypes=[("Video Files", "*.mp4 *.avi *.mkv *.mov")])
+
+        if vid:
+            video = mp.VideoFileClip(vid)
+            aud = video.audio
+
+            # Set the frame rate of the output audio file
+            aud.set_fps(video.fps)
+
+            # Write the audio to an MP3 file
+            aud.write_audiofile(f'{vid}.mp3')
+
+            print("Audio extraction and conversion to MP3 complete.")
+        else:
+            print("No video file selected.")
+            
+def pdf_to_docx():
+            from pdf2docx import Converter
+            from tkinter.filedialog import askopenfilename
+            from docx import Document
+
+            # Select a PDF file using the file dialog
+            pdf_file = askopenfilename(title="Select a pdf File", filetypes=[("PDF Files", "*.pdf")])
+
+            # Convert PDF to DOCX
+            docx_file = f'{pdf_file}.docx'
+            cv = Converter(pdf_file)
+            cv.convert(docx_file, start=0, end=None)
+            cv.close()
+
+            # Parse text from the DOCX file
+            doc = Document(docx_file)
+            text = "\n".join([paragraph.text for paragraph in doc.paragraphs])                                            
+
+def doc_to_pdf():
+        from docx2pdf import convert
+from tkinter.filedialog import askopenfilename
+import os
+
+def doc_to_pdf():
+    try:
+        # Ask the user to select a DOCX file
+        docx = askopenfilename(title="Select a DOCX file", filetypes=[("DOCX Files", "*.docx")])
+
+        if docx:
+            # Split the file name into the base name and extension
+            base_name, extension = os.path.splitext(docx)
+
+            # Ensure the selected file is a DOCX file
+            if extension.lower() == ".docx":
+                pdf_name = f'{base_name}.pdf'
+                convert(docx, pdf_name)
+                print("File created:", pdf_name)
+            else:
+                print("Selected file is not a DOCX file.")
+        else:
+            print("No file selected.")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+
+def txt_to_pdf():
+                import tkinter as tk
+                from tkinter.filedialog import askopenfilename
+                from reportlab.lib.pagesizes import letter
+                from reportlab.lib import colors
+                from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+                from reportlab.lib.styles import getSampleStyleSheet
+
+                def convert_txt_to_pdf(txt_file, pdf_file):
+                    try:
+                        with open(txt_file, 'r') as txt:
+                            content = txt.read()
+
+                        doc = SimpleDocTemplate(pdf_file, pagesize=letter)
+                        styles = getSampleStyleSheet()
+                        story = []
+                        formatted_text = Paragraph(content, styles["Normal"])
+                        story.append(formatted_text)
+
+                        doc.build(story)
+                        print(f"PDF created: {pdf_file}")
+                    except Exception as e:
+                        print(f"Error: {e}")
+
+                # Create a tkinter window (for the file dialog)
+                root = tk.Tk()
+                root.withdraw() # Hide the root window
+
+                # Ask the user to select a TXT file
+                txt_file = askopenfilename(title="Select a TXT file", filetypes=[("TXT Files", "*.txt")])
+
+                if txt_file:
+                    # Create a PDF file with the same name as the TXT file but with a .pdf extension
+                    pdf_file = txt_file.replace(".txt", ".pdf")
+                    
+                    # Convert the TXT file to PDF
+                    convert_txt_to_pdf(txt_file, pdf_file)
+                else:
+                    print("No file selected.")
+
+                # Close the tkinter window
+                root.quit()
+
+
+
+print(" \033[96m")
+print("\n")
+print("*******************************************************************************************************************************")
+print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+print("\n----------------------------------------------------- FILE CONVERTERE ------------------------------------------------------\n")
+print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+print("*******************************************************************************************************************************")
+
+def converting():
+    while True:
+
+    
+
+        print(" \033[96m")
+        print("1. VIDEO TO AUDIO")
+        print("2. PDF TO WORD")
+        print("3. WORD TO PDF")
+        print("4. TXT TO PDF")
+        print("5. Exit")
+        
+        ans = input("Enter your choice (1-5): ")
+
+        if ans == '1':
+            video_to_audio()
+        elif ans == '2':
+            pdf_to_docx()
+        elif ans == '3':
+            doc_to_pdf()
+        elif ans == '4':
+            txt_to_pdf()
+        elif ans == '5':
+
+            print("\n You're welcome! \n If you have any more questions or need further assistance in the future, feel free to reach out.\n Have a great day, and I'm glad you found the file converter program useful!")
+            print("\n------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            print("------------------------------------------------------------------------------------------------------------------------------------------------------------------\n\n")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+# Call the converting function to start the program
+converting()
+
